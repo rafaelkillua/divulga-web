@@ -1,7 +1,7 @@
 <template>
   <section class="home">
     <h2 class="title">
-      Bem vindos ao Divulgador, onde empresas pequenas têm nome!
+      Bem vindos ao Divulga, onde empresas pequenas têm nome!
     </h2>
   </section>
 </template>

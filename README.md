@@ -1,4 +1,4 @@
-# divulgador
+# divulga-web
 
 ## Project setup
 ```
