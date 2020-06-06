@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -13,7 +13,9 @@
     "date-fns": "^2.14.0",
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",
-    "vue-router": "^3.2.0"
+    "vue-float-label": "^1.6.1",
+    "vue-router": "^3.2.0",
+    "vue-select": "^3.10.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.4.0",
