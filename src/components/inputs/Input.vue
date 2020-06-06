@@ -1,6 +1,11 @@
 <template>
   <float-label>
-    <input class="input" :value="value" @input="evt => $emit('input', evt.target.value)" :placeholder="label"/>
+    <input
+      class="input"
+      :placeholder="label"
+      @input="evt => $emit('input', evt.target.value)"
+      :value="value"
+    />
   </float-label>
 </template>
 
@@ -18,6 +23,7 @@ export default {
       default: ''
     }
   },
+
   components: {
     FloatLabel
   }

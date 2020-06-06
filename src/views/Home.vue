@@ -4,7 +4,14 @@
       <h2 class="title">Bem vindos ao Divulga, onde empresas pequenas têm nome!</h2>
     </section>
     <section>
-      <filters />
+      <filters
+        :selectedUf.sync="selectedUf"
+        :selectedCity.sync="selectedCity"
+        :businessName.sync="businessName"
+      />
+    </section>
+    <section>
+
     </section>
   </div>
 </template>
@@ -14,9 +21,16 @@ import Filters from '@/components/Filters'
 
 export default {
   name: 'Home',
+
   components: {
     Filters
-  }
+  },
+
+  data: () => ({
+    selectedUf: '',
+    selectedCity: '',
+    businessName: ''
+  })
 }
 </script>
 
