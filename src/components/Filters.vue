@@ -78,25 +78,39 @@ export default {
     loadingCategories: true
   }),
 
+  methods: {
+    loadUfs () {
+      getUfs().then(res => {
+        this.ufs = res
+        this.loadingUfs = false
+      }).catch(this.loadUfs)
+    },
+
+    loadCategories () {
+      getCategories().then(res => {
+        this.categories = res
+        this.loadingCategories = false
+      }).catch(this.loadCategories)
+    },
+
+    loadCities (newUf) {
+      getCities(newUf).then(res => {
+        this.cities = res
+        this.loadingCities = false
+      }).catch(() => this.loadCities(newUf))
+    }
+  },
+
   mounted () {
-    getUfs().then(res => {
-      this.ufs = res
-      this.loadingUfs = false
-    })
-    getCategories().then(res => {
-      this.categories = res
-      this.loadingCategories = false
-    })
+    this.loadUfs()
+    this.loadCategories()
   },
 
   watch: {
     selectedUf (newUf) {
       if (newUf) {
+        this.loadCities(newUf)
         this.loadingCities = true
-        getCities(newUf).then(res => {
-          this.cities = res
-          this.loadingCities = false
-        })
       }
       this.$emit('update:selectedCity', '')
     }

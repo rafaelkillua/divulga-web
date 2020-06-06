@@ -27,7 +27,7 @@ export default {}
   @apply px-8 py-2 flex justify-between items-center
 
 .navbar-wrapper
-  @apply fixed top-0 left-0 w-full shadow-lg bg-primary flex items-center justify-center
+  @apply fixed top-0 left-0 w-full shadow-lg bg-primary flex items-center justify-center z-50
 
 .logo
   @apply h-12
