@@ -25,6 +25,8 @@ body
 
 .main
   min-height: calc(100vh - 4rem)
-  @apply mt-16 flex justify-center px-8 py-4
+  @apply mt-16 flex justify-center p-4
+  @screen lg
+    @apply px-8
 
 </style>

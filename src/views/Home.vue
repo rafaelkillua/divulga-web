@@ -5,19 +5,22 @@
     </section>
     <section>
       <filters
+        :businessName.sync="businessName"
+        :selectedCategory.sync="selectedCategory"
         :selectedUf.sync="selectedUf"
         :selectedCity.sync="selectedCity"
-        :businessName.sync="businessName"
       />
     </section>
     <section>
-
+      <button @click="getBusiness">teste</button>
+      {{ JSON.stringify(business) }}
     </section>
   </div>
 </template>
 
 <script>
 import Filters from '@/components/Filters'
+import { getBusiness } from '@/services/business'
 
 export default {
   name: 'Home',
@@ -27,10 +30,27 @@ export default {
   },
 
   data: () => ({
+    business: [],
+
+    businessName: '',
+    selectedCategory: '',
     selectedUf: '',
-    selectedCity: '',
-    businessName: ''
-  })
+    selectedCity: ''
+  }),
+
+  methods: {
+    getBusiness () {
+      const params = {
+        name: this.businessName,
+        category: this.selectedCategory,
+        uf_id: this.selectedUf,
+        city_id: this.selectedCity
+      }
+      getBusiness(params).then(res => {
+        this.business = res
+      }).catch(error => console.error(error))
+    }
+  }
 }
 </script>
 
