@@ -28,7 +28,7 @@ import Business from '@/components/layout/Business'
 import Pagination from '@/components/Pagination'
 import { getBusiness } from '@/services/business'
 
-const perPage = 2
+const perPage = 12
 
 export default {
   name: 'Home',
