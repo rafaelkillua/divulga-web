@@ -16,11 +16,12 @@
     </transition>
     <div class="container navbar">
       <router-link to="/">
-        <img
+      <span class="logo-name">Divulga</span>
+        <!-- <img
           class="logo"
           src="https://via.placeholder.com/350x150?text=Divulga"
           @click="showMobile = false"
-        />
+        /> -->
       </router-link>
       <ul class="nav">
         <li>
@@ -64,6 +65,9 @@ export default {
 
 .logo
   @apply h-12
+
+.logo-name
+  @apply text-2xl text-white font-bold
 
 .nav
   @apply hidden

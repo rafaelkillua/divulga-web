@@ -24,7 +24,7 @@
 
 <script>
 import Filters from '@/components/Filters'
-import Business from '@/components/layout/Business'
+import Business from '@/components/Business'
 import Pagination from '@/components/Pagination'
 import { getBusiness } from '@/services/business'
 
