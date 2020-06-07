@@ -47,10 +47,10 @@
       />
       <v-input
         class="field field-half"
-        label="Telefone da empresa"
+        label="Telefone da empresa (com DDD)"
         v-model="form.phone"
         type="tel"
-        rules="required"
+        rules="required|min:10|max:12"
       />
       <v-select
         class="field field-half"

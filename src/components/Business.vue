@@ -1,7 +1,12 @@
 <template>
   <div class="business-wrapper">
     <div class="business">
-      <img class="logo" v-if="business.logo && business.logo.secure_url" :src="business.logo.secure_url" :alt="`Logo ${business.name}`" />
+      <img
+        class="logo"
+        v-if="business.logo && business.logo.secure_url"
+        :src="business.logo.eager.length > 0 ? business.logo.eager[0].secure_url : business.logo.secure_url"
+        :alt="`Logo ${business.name}`"
+      />
       <h2 class="title">{{business.name}}</h2>
       <p class="category">
         <category-icon class="icon" decorative />
@@ -67,7 +72,7 @@ export default {
   @apply w-full h-48 object-contain bg-center
 
 .title
-  @apply font-bold text-center text-primary mb-2
+  @apply font-bold text-center text-primary mb-2 text-lg
 
 .icon
   @apply text-red-600 mr-1

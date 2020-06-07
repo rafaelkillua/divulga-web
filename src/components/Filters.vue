@@ -17,7 +17,7 @@
       @input="value => $emit('update:selectedCategory', value)"
       :reduce="v => v._id"
     />
-    <v-select
+    <!-- <v-select
       class="field"
       label="Estado"
       optionLabel="nome"
@@ -35,7 +35,7 @@
       :loading="loadingCities"
       @input="value => $emit('update:selectedCity', value)"
       :disabled="!selectedUf"
-    />
+    /> -->
   </article>
 </template>
 
@@ -102,7 +102,7 @@ export default {
   },
 
   mounted () {
-    this.loadUfs()
+    // this.loadUfs()
     this.loadCategories()
   },
 
@@ -129,6 +129,4 @@ export default {
   @apply w-full px-1 mt-4
   @screen md
     @apply w-1/2
-  @screen lg
-    @apply w-1/4 mt-0
 </style>
