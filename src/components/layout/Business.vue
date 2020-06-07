@@ -2,11 +2,26 @@
   <div class="business-wrapper">
     <div class="business">
       <h2 class="title">{{business.name}}</h2>
-      <p class="category"><category-icon decorative/>{{business.category && business.category.name}}</p>
-      <h6 class="description"><business-icon decorative/>{{business.description}}</h6>
-      <p class="email"><email-icon decorative/>{{business.email}}</p>
-      <p class="phone"><phone-icon decorative/>{{business.phone | phoneMask}}</p>
-      <p class="address"><address-icon decorative/>{{business.address.street}}, {{business.address.number}} - {{business.address.neighborhood}} - {{business.address.city}} - {{business.address.uf}}</p>
+      <p class="category">
+        <category-icon class="icon" decorative />
+        {{business.category && business.category.name}}
+      </p>
+      <h6 class="description">
+        <business-icon class="icon" decorative />
+        {{business.description}}
+      </h6>
+      <p class="email">
+        <email-icon class="icon" decorative />
+        {{business.email}}
+      </p>
+      <p class="phone">
+        <phone-icon class="icon" decorative />
+        {{business.phone | phoneMask}}
+      </p>
+      <p class="address">
+        <address-icon class="icon" decorative />
+        {{business.address.street}}, {{business.address.number}} - {{business.address.neighborhood}} - {{business.address.city}} - {{business.address.uf}}
+      </p>
     </div>
   </div>
 </template>
@@ -50,28 +65,21 @@ export default {
 .title
   @apply font-bold text-center text-primary mb-2
 
+.icon
+  @apply text-red-600 mr-1
+
 .category
   @apply flex text-sm items-center
-  &> span
-    @apply mr-1
 
 .description
   @apply flex text-sm items-center
-  &> span
-    @apply mr-1
 
 .email
   @apply flex text-sm font-bold
-  &> span
-    @apply mr-1
 
 .phone
   @apply flex text-sm font-bold
-  &> span
-    @apply mr-1
 
 .address
   @apply flex text-sm
-  &> span
-    @apply mr-1
 </style>

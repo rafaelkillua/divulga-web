@@ -123,7 +123,7 @@ export default {
   @apply flex justify-between items-center flex-wrap border border-gray-500 rounded-md p-4
 
 .title
-  @apply w-full font-bold mb-4
+  @apply w-full font-bold mb-4 text-center
 
 .field
   @apply w-full px-1 mt-4

@@ -20,10 +20,6 @@
         </template>
         <em class="no-data" v-else>Não há opções</em>
       </template>
-      <!-- <template v-slot:spinner="{ loading }">
-        {{String(loading)}}
-        <div class="spinner" v-show="spinner">Loading...</div>
-      </template>-->
     </v-select>
   </float-label>
 </template>

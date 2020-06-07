@@ -1,7 +1,7 @@
 <template>
   <div>
     <section class="home">
-      <h2 class="title">Bem vindos ao Divulga, onde empresas pequenas têm nome!</h2>
+      <h2 class="title">Bem vindo ao Divulga, onde empresas pequenas têm nome!</h2>
     </section>
     <section>
       <filters
@@ -13,6 +13,11 @@
     </section>
     <section class="business-list">
       <business v-for="bus of business" :business="bus" :key="bus._id" />
+      <div class="w-full text-center text-sm" v-if="business.length === 0">Não há resultados, tente alterar o filtro</div>
+      <pagination
+        :pagination="pagination"
+        @changePage="newPage => getBusiness(newPage)"
+      />
     </section>
   </div>
 </template>
@@ -20,16 +25,18 @@
 <script>
 import Filters from '@/components/Filters'
 import Business from '@/components/layout/Business'
+import Pagination from '@/components/Pagination'
 import { getBusiness } from '@/services/business'
 
-const perPage = 12
+const perPage = 2
 
 export default {
   name: 'Home',
 
   components: {
     Filters,
-    Business
+    Business,
+    Pagination
   },
 
   data: () => ({
@@ -50,7 +57,8 @@ export default {
   }),
 
   methods: {
-    getBusiness () {
+    getBusiness (newPage) {
+      if (newPage) this.pagination.page = newPage
       const params = {
         name: this.businessName,
         category: this.filters.selectedCategory,
@@ -77,14 +85,13 @@ export default {
   watch: {
     filters: {
       handler: function () {
-        this.pagination.page = 1
-        this.getBusiness()
+        this.getBusiness(1)
       },
       deep: true
     },
     businessName () {
       if (this.timer) clearTimeout(this.timer)
-      this.timer = setTimeout(this.getBusiness, 1000)
+      this.timer = setTimeout(() => this.getBusiness(1), 1000)
     }
   }
 }

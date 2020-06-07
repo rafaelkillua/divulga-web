@@ -16,7 +16,8 @@
     "vue-float-label": "^1.6.1",
     "vue-material-design-icons": "^4.7.1",
     "vue-router": "^3.2.0",
-    "vue-select": "^3.10.3"
+    "vue-select": "^3.10.3",
+    "vuejs-paginate": "^2.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.4.0",
