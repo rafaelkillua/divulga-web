@@ -87,7 +87,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "vue-select/src/scss/vue-select.scss"
+@import url('https://unpkg.com/vue-select@latest/dist/vue-select.css')
 .custom-select
   @apply h-10
   .vs__dropdown-toggle
