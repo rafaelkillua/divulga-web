@@ -1,9 +1,11 @@
 <template>
   <router-link v-if="type === 'link'" class="button" :to="to" >
-    <slot />
+    <div class="vs__spinner" v-if="loading"/>
+    <slot v-else/>
   </router-link>
   <button v-else class="button" @click="$emit('click')">
-    <slot />
+    <div class="vs__spinner" v-if="loading"/>
+    <slot v-else/>
   </button>
 </template>
 
@@ -14,7 +16,13 @@ export default {
       type: String,
       default: 'button'
     },
-    to: String
+    to: {
+      type: String
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    }
   }
 }
 </script>
@@ -27,5 +35,7 @@ export default {
     @apply bg-gray-100
   &:active
     @apply bg-gray-200
+  &> .vs__spinner
+    @apply opacity-100
 
 </style>

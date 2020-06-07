@@ -12,6 +12,7 @@
     "core-js": "^3.6.5",
     "date-fns": "^2.14.0",
     "register-service-worker": "^1.7.1",
+    "vee-validate": "^3.3.2",
     "vue": "^2.6.11",
     "vue-float-label": "^1.6.1",
     "vue-material-design-icons": "^4.7.1",

@@ -73,10 +73,10 @@ export default {
   @apply text-red-600 mr-1
 
 .category
-  @apply flex text-sm items-center
+  @apply flex text-sm
 
 .description
-  @apply flex text-sm items-center
+  @apply flex text-sm
 
 .email
   @apply flex text-sm font-bold

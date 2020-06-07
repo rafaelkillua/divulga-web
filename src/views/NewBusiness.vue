@@ -1,64 +1,106 @@
 <template>
-  <form class="form" @submit.prevent="submit">
-    <div class="logo-container">
-      <img
-        :src="files.length > 0 ? files[0].blob : 'https://via.placeholder.com/350x150?text=Sua+logo+aqui'"
-        class="logo"
-      />
-      <file-upload
-        class="upload-button"
-        ref="upload"
-        v-model="files"
-        @input-file="inputFile"
-        @input-filter="inputFilter"
-        accept="image/png, image/gif, image/jpeg, image/webp"
-      >Selecionar logo</file-upload>
-    </div>
+  <validation-observer v-slot="{ handleSubmit }">
+    <form class="form" @submit.prevent="handleSubmit(submit)">
+      <div class="logo-container">
+        <img
+          :src="files.length > 0 ? files[0].blob : 'https://via.placeholder.com/350x150?text=Sua+logo+aqui'"
+          class="logo"
+        />
+        <file-upload
+          class="upload-button"
+          ref="upload"
+          v-model="files"
+          @input-filter="inputFilter"
+          accept="image/png, image/gif, image/jpeg, image/webp"
+        >Selecionar logo</file-upload>
+      </div>
 
-    <v-input class="field field-half" label="Nome da empresa" v-model="form.name" />
-    <v-select
-      class="field field-half"
-      label="Categoria"
-      optionLabel="name"
-      :options="categories"
-      :value="form.category"
-      :loading="loadingCategories"
-      @input="value => form.category = value"
-      :reduce="v => v._id"
-    />
-    <v-input class="field w-full" label="Descrição da empresa" v-model="form.description" />
-    <v-input class="field field-half" label="E-mail do responsável" v-model="form.email" />
-    <v-input class="field field-half" label="Telefone da empresa" v-model="form.phone" />
-    <v-select
-      class="field field-half"
-      label="Estado"
-      optionLabel="nome"
-      :options="ufs"
-      :value="form.address.uf_id"
-      :loading="loadingUfs"
-      @input="value => form.address.uf_id = value"
-    />
-    <v-select
-      class="field field-half"
-      label="Cidade"
-      optionLabel="nome"
-      :options="cities"
-      :value="form.address.city_id"
-      :loading="loadingCities"
-      @input="value => form.address.city_id = value"
-      :disabled="!form.address.uf_id"
-    />
-    <v-input class="field field-half" label="Logradouro" v-model="form.address.street" />
-    <v-input class="field field-quarter" label="Número" v-model="form.address.number" />
-    <v-input class="field field-quarter" label="Bairro" v-model="form.address.neighborhood" />
-    <div class="submit">
-      <v-button type="submit">Cadastrar</v-button>
-    </div>
-  </form>
+      <v-input
+        class="field field-half"
+        label="Nome da empresa"
+        v-model.lazy="form.name"
+        rules="required|min:4|max:50"
+      />
+      <v-select
+        class="field field-half"
+        label="Categoria"
+        optionLabel="name"
+        :options="categories"
+        :value="form.category"
+        :loading="loadingCategories"
+        @input="value => form.category = value"
+        :reduce="v => v._id"
+        rules="required"
+      />
+      <v-input
+        class="field w-full"
+        rules="required|min:10|max:100"
+        label="Descrição da empresa"
+        v-model="form.description"
+      />
+      <v-input
+        class="field field-half"
+        rules="required"
+        label="E-mail do responsável"
+        type="email"
+        v-model="form.email"
+      />
+      <v-input
+        class="field field-half"
+        label="Telefone da empresa"
+        v-model="form.phone"
+        type="tel"
+        rules="required"
+      />
+      <v-select
+        class="field field-half"
+        label="Estado"
+        optionLabel="nome"
+        :options="ufs"
+        :value="form.address.uf_id"
+        :loading="loadingUfs"
+        @input="value => form.address.uf_id = value"
+        rules="required"
+      />
+      <v-select
+        class="field field-half"
+        label="Cidade"
+        optionLabel="nome"
+        :options="cities"
+        :value="form.address.city_id"
+        :loading="loadingCities"
+        @input="value => form.address.city_id = value"
+        :disabled="!form.address.uf_id"
+        rules="required"
+      />
+      <v-input
+        class="field field-half"
+        label="Logradouro"
+        v-model="form.address.street"
+        rules="required"
+      />
+      <v-input
+        class="field field-quarter"
+        label="Número"
+        v-model="form.address.number"
+        rules="required"
+      />
+      <v-input
+        class="field field-quarter"
+        label="Bairro"
+        v-model="form.address.neighborhood"
+        rules="required"
+      />
+      <div class="submit">
+        <v-button type="submit" :loading="loadingSubmit">Cadastrar</v-button>
+      </div>
+    </form>
+  </validation-observer>
 </template>
 
 <script>
 import FileUpload from 'vue-upload-component'
+import { ValidationObserver } from 'vee-validate'
 import vInput from '@/components/inputs/Input'
 import vSelect from '@/components/inputs/Select'
 import vButton from '@/components/buttons/Button'
@@ -71,7 +113,8 @@ export default {
     FileUpload,
     vInput,
     vSelect,
-    vButton
+    vButton,
+    ValidationObserver
   },
   data: () => ({
     ufs: [],
@@ -81,6 +124,7 @@ export default {
     loadingUfs: true,
     loadingCities: false,
     loadingCategories: true,
+    loadingSubmit: false,
 
     files: [],
     form: {
@@ -111,24 +155,18 @@ export default {
   methods: {
     async submit () {
       try {
+        if (this.files.length === 0) throw new Error('Não há imagem selecionada')
+        this.loadingSubmit = true
         const response = await createBusiness(this.form)
 
         const logoData = new FormData()
         logoData.append('logo', this.files[0].file)
         logoData.append('businessId', response._id)
         await uploadLogo(logoData)
+        this.$router.push('/')
       } catch (error) {
         console.error(error)
-      }
-    },
-    inputFile (newFile, oldFile) {
-      if (newFile && oldFile && !newFile.active && oldFile.active) {
-        // Get response data
-        console.log('response', newFile.response)
-        if (newFile.xhr) {
-          //  Get the response status code
-          console.log('status', newFile.xhr.status)
-        }
+        this.loadingSubmit = false
       }
     },
     inputFilter (newFile, oldFile, prevent) {
@@ -184,13 +222,17 @@ export default {
       if (newUf) {
         this.loadCities(newUf)
         this.loadingCities = true
+        this.form.address.uf = this.ufs.find(uf => uf.id === newUf).nome
       }
-      this.form.address.uf = this.ufs.find(uf => uf.id === newUf).nome
       this.form.address.city = ''
       this.form.address.city_id = ''
     },
     selectedCity (newCity) {
-      this.form.address.city = this.cities.find(city => city.id === newCity).nome
+      if (newCity) {
+        this.form.address.city = this.cities.find(
+          city => city.id === newCity
+        ).nome
+      }
     }
   }
 }
@@ -215,7 +257,7 @@ export default {
     @apply cursor-pointer
 
 .field
-  @apply mt-6 px-1
+  @apply mt-8 mb-2 px-1
   &-quarter
     @apply w-full
     @screen md

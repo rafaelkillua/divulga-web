@@ -3,7 +3,7 @@
     <h5 class="title">Pesquise uma pequena empresa perto de você</h5>
     <v-input
       class="field"
-      label="Nome da empresa"
+      label="O que você procura?"
       :value="businessName"
       @input="value => $emit('update:businessName', value)"
     />
